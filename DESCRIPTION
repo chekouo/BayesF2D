@@ -1,0 +1,13 @@
+Package: BayesF2D
+Type: Package
+Title: Bayesian generalized two-dimensional functional linear models, allowing for nonlinear association structures between scalar responses, functional and high-dimensional scalar predictors
+Version: 1.0
+Date: 2020-04-10
+Author: Thierry Chekouo and Shariq Mohammed
+Maintainer: Thierry Chekouo <thierry.chekouotekou@ucalgary.ca>
+Description: The BayesF2D package implements an MCMC algorithm for a  Bayesian Analysis for functional 2D data and performs prediction of a scalar response.. 
+SystemRequirements: GSL (GNU Scientific Library)
+License: GPL (>= 2.0)
+Imports: AUC, mvtnorm,fdapace, mgcv, MASS,caret
+RoxygenNote: 6.1.0
+Encoding: UTF-8
