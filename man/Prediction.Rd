@@ -31,10 +31,10 @@ Matrix of covariates of the new indiduals. Dimension \eqn{n\times nbrcov} where 
 }
 }
 \details{
-The function will return predictive probabilities if the response is binary or predictive  conyinuous  values if the response is continuous. 
+The function will return predictive probabilities if the response is binary or scalar values if the response is continuous. 
 }
 \references{
-Thierry Chekouo et al (2020), \emph{A Bayesian 2D Functional Linear Model for Gray LevelCo-occurrence Matrices in Texture Analysis of LowerGrade Gliomas}, \emph{submitted}.
+Thierry Chekouo et al (2020), \emph{A Bayesian 2D Functional Linear Model for Gray Level Co-occurrence Matrices in Texture Analysis of LowerGrade Gliomas}, \emph{submitted}.
 }
 %\references{
 %% ~put references to the literature/web site here ~

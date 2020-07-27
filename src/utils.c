@@ -246,15 +246,7 @@ if (Kl!=0){
  }
  //printf("\nHH=%d\n",l);
  }
-/*
- printf("\nHH=%d\n",l);
- for (k=0;k<Kl;k++){
-     for (k1=0;k1<Kl;k1++){
-printf("%lf, ",Sigmal[k*Kl+k1]);
-     }
- printf("\n");
- }
- */
+
  
  gsl_matrix_view m  = gsl_matrix_view_array (Sigmal, Kl,Kl);
  gsl_linalg_cholesky_decomp (&m.matrix);

@@ -5,7 +5,7 @@
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 
- void MCMC(int* typeOutcome,int * n1,int *TT1,int *r1,int *nbrcov1,double * resp, double *X,int *KK, double* Base1, double* Xcov1, int *nbrsample1,int *burninsample1, double * Betasample,double *XsiMean1,double* rhoMean1,double * CovImageSample,double *LambdaMean1,double* seed1,double *hypsigm_rr,double *h1,int *covbool,int *rhosample1, double *yMean,double *sigma2xMean,double * sigma2yMean1);
+ void MCMC(int* typeOutcome,int * n1,int *TT1,int *r1,int *nbrcov1,double * resp, double *X,int *KK, double* Base1, double* Xcov1, int *nbrsample1,int *burninsample1, double * Betasample,double *XsiMean1,double* rhoMean1,double * CovImageSample,double *LambdaMean1,double* seed1,double *hypsigm_rr,double *h1,int *covbool,int *rhosample1, double *yMean,double *sigma2xMean,double * sigma2yMean1,int * SamplingRho);
 
 
 void Prediction(int* typeOutcome,int * n1,int* ntest1,int *TT1,int *r1,int *nbrcov1,double *yMean ,double *resp,double *X,double *Xtest, int *KK, double* Base1, double* Xcov1,double* Xcovtest1,int* Kf, int *nbrset,int * ListTest, int * ListTraining,int *nbrsample1,int* Predict1,double *XsiMean1,double *prob,double * CovImageMean1,int * rhosample1,double *LambdaMean1,double* seed1,double *hypsigm_rr,double *h1,int *covbool,double *sigma2xMean,double *sigma2yMean1);

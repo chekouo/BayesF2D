@@ -1,4 +1,4 @@
-BayesF2DMCMC<-function(covbCov=TRUE,y=y,typeoutcome="binary", TwoDX=TwoDX,Xcov=NULL,nbriter=1000,nbrburnin=100,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1){
+BayesF2DMCMC<-function(covbCov=TRUE,SamplingGamma=TRUE,y=y,typeoutcome="binary", TwoDX=TwoDX,Xcov=NULL,nbriter=1000,nbrburnin=100,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1){
   if (length(hypsigm_rr)!=2){
 stop("hypsigm_rr must be a vector of dimension 2, hyperparameters of sigma_rr")
 }
@@ -58,9 +58,11 @@ result<-.C("MCMC",typeOutcome=as.integer(typeoutcome),n1=as.integer(n),
            burninsample1=as.integer(nbrburnin),
            Betasample=as.double(rep(0,dimbeta)),XsiMean1=as.double(rep(0,dimXsi)),
            rhoMean1=as.double(rep(0,sum(TNbrComp))),
-           CovImageSample=as.double(rep(0,nbriter*r*r)),LambdaMean1=as.double(rep(0,sum(TNbrComp))),seed1=as.double(chainNber),hypsigm_rr=as.double(hypsigm_rr),h1=as.double(h),covbool=as.integer(1*covbCov),rhosample1=as.integer(rep(0,dimbeta)),yMean=as.double(rep(0,n)),sigma2xMean=as.double(rep(0,r)),sigma2yMean1=as.double(0))
+           CovImageSample=as.double(rep(0,nbriter*r*r)),LambdaMean1=as.double(rep(0,sum(TNbrComp))),seed1=as.double(chainNber),hypsigm_rr=as.double(hypsigm_rr),h1=as.double(h),covbool=as.integer(1*covbCov),rhosample1=as.integer(rep(0,dimbeta)),yMean=as.double(rep(0,n)),sigma2xMean=as.double(rep(0,r)),sigma2yMean1=as.double(0),as.integer(1*SamplingGamma))
   BetaSample=list()
   BetaMedian=list()
+  Beta2.5=list();
+Beta97.5=list()
   XsiSampleMean=list()
   GamMean=list()
   LambdaMean=list()
@@ -68,6 +70,8 @@ result<-.C("MCMC",typeOutcome=as.integer(typeoutcome),n1=as.integer(n),
   for (l in 1:r){
   BetaSample[[l]]=matrix(0,nbriter,TNbrComp[l])
   BetaMedian[[l]]=rep(0,TNbrComp[l])
+   Beta2.5[[l]]=rep(0,TNbrComp[l])
+  Beta97.5[[l]]=rep(0,TNbrComp[l])
   GamMean[[l]]=rep(0,TNbrComp[l])
   }
   for (s in 1:nbriter){
@@ -92,6 +96,8 @@ result<-.C("MCMC",typeOutcome=as.integer(typeoutcome),n1=as.integer(n),
     XsiSampleMean[[l]]=matrix(XsiMean[(1+xx):(xx+b)],TNbrComp[l],byrow = T)
     xx=xx+b;
     BetaMedian[[l]]=apply(BetaSample[[l]],2,median)
+     Beta2.5[[l]]=apply(BetaSample[[l]],2,function (x) quantile(x, probs = 0.025))
+     Beta97.5[[l]]=apply(BetaSample[[l]],2,function (x) quantile(x, probs = 0.975))
     GamMean[[l]]=result$rhoMean1[(1+xr):(xr+TNbrComp[l])]
     LambdaMean[[l]]=result$LambdaMean1[(1+xr):(xr+TNbrComp[l])]
   xr=xr+TNbrComp[l];
@@ -114,7 +120,7 @@ result<-.C("MCMC",typeOutcome=as.integer(typeoutcome),n1=as.integer(n),
 CovSample1=aperm(array(result$CovImageSample,dim=c(r,r,nbriter)))
 CovImageMean=apply(CovSample1,c(2,3),mean);
 CovImageMean1=as.vector(t(apply(CovSample1,c(2,3),mean)));
-  return (list(NbrComp=NbrComp,BetaMedian=BetaMedian,BetaFunc=BetaFunc,XsiSampleMean=XsiSampleMean,GamMean=GamMean,LambdaMean=LambdaMean,CovImageMean=CovImageMean,
+  return (list(NbrComp=NbrComp,BetaMedian=BetaMedian,BetaFunc=BetaFunc,Beta2.5=Beta2.5,Beta97.5=Beta97.5,XsiSampleMean=XsiSampleMean,GamMean=GamMean,LambdaMean=LambdaMean,CovImageMean=CovImageMean,
  ForPredict=list(nsym=nsym,MeanCov=MeanCov,n=n,Mean=Mean,typeoutcome=typeoutcome,TT=TT,r=r,nbrcov=nbrcov,y=y,KK=KK,Base2D=Base2D,Xcov1=Xcov1,nbriter=nbriter,XsiMean1=result$XsiMean1,CovImageMean1=CovImageMean1,rhosample1=result$rhosample1,LambdaMean1=result$LambdaMean1,hypsigm_rr=hypsigm_rr,h=h,covboolean=covbCov*1,yMean=result$yMean,X=X,sigma2xMean=result$sigma2xMean,sigma2yMean1=result$sigma2yMean1)))
 }
 

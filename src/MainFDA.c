@@ -13,11 +13,14 @@
 //void MCMC(char **typeOutcome,int * n1,int* ntest1,int *TT1,int *r1,int *nbrcov1,double * resp, double *X,double *Xtest, int *KK, double* Base1, double* Xcov1,double* Xcovtest1,int* Kf, int *nbrset,int * ListTest, int * ListTraining, int *nbrsample1,int *burninsample1,int* Predict1, 
        //   double * Betasample,double *XsiMean1,double* rhoMean1,double *logpost,double *prob,double * CovImageSample){
   
-  void MCMC(int* typeOutcome,int * n1,int *TT1,int *r1,int *nbrcov1,double * resp, double *X,int *KK, double* Base1, double* Xcov1, int *nbrsample1,int *burninsample1, double * Betasample,double *XsiMean1,double* rhoMean1,double * CovImageSample,double *LambdaMean1,double* seed1,double *hypsigm_rr,double *h1,int *covbool,int *rhosample1, double *yMean,double *sigma2xMean,double * sigma2yMean1){
+  void MCMC(int* typeOutcome,int * n1,int *TT1,int *r1,int *nbrcov1,double * resp, double *X,int *KK, double* Base1, double* Xcov1, int *nbrsample1,int *burninsample1, double * Betasample,double *XsiMean1,double* rhoMean1,double * CovImageSample,double *LambdaMean1,double* seed1,double *hypsigm_rr,double *h1,int *covbool,int *rhosample1, double *yMean,double *sigma2xMean,double * sigma2yMean1, int * SamplingRho){
   int i,l,k,t;
   int bs=0;
   clock_t t1 = clock();
   //char * typeOutcome1=typeOutcome[0];
+  int SamplingRho1=SamplingRho[0]; 
+// (SamplingRho1==1) we sample rho
+// if (SamplingRho1==0) we do NOT sample rho
   int typeOutcome1=typeOutcome[0];
   if (typeOutcome1==1){
   //printf("The Type of outcome is %s\n",typeOutcome1);
@@ -143,6 +146,7 @@ double ** Beta=malloc(r*sizeof(double*));
    if (uni<=0.5) { rho[l][k]=1; Beta[l][k]=1;  
    } else {rho[l][k]=0;Beta[l][k]=0;
    }
+   if (SamplingRho1==0){rho[l][k]=1;Beta[l][k]=0;}
    }
  }
  //Initialization of Xsi's
@@ -222,6 +226,7 @@ for (s=0;s<burninsample+nbrsample;s++){
       y[i]=respy[i]-xb;
    
     }
+     if (SamplingRho1==1) // We sample rho
   SampleRho(l,r,rr,n,KK[l],y,Xsi[l],sigma2y,CovImage,   &scal,&Muscal,rho,KK,w[l],Beta,h);   
     if (s>=burninsample){
       for (k=0;k<KK[l];k++){

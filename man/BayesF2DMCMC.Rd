@@ -8,14 +8,17 @@ An MCMC algorithm to perform a Bayesian  two-dimensional functional linear model
 The algorithm computes (i) the marginal posterior probabilities of inclusions for each feature (i.e combinations of eigenvectors obtained from each dimension using FPCA), (ii) provide estimates of functional regression effects, and (ii) evaluate prediction performance of the method for both continuous and binary responses.  
 }
 \usage{
-BayesF2DMCMC(covbCov=TRUE,y=y,typeoutcome="binary", TwoDX=TwoDX,Xcov=NULL,nbriter=1000,
-nbrburnin=100,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1)
+BayesF2DMCMC(covbCov=TRUE,SamplingGamma=TRUE,y=y,typeoutcome="binary", TwoDX=TwoDX,
+             Xcov=NULL,nbriter=1000,nbrburnin=100,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{covbCov}{
 If TRUE, then we assume a positive correlation between the functional regression effects if the feature types (e.g if TRUE, the correlation is assume between the 4 imaging sequences mentioned in the referenced paper). Otherwise, no correlation. 
 }
+ \item{SamplingGamma}{
+ If TRUE, then we sample the latent binary vector \eqn{\gamma} for the selection of important components on the 2D representation of GLCMs. Otherwise, we assume they are equal to 1. In this case, important components are selected by checking if 0 belongs the the 95\% Bayesian coverage of regression effects .
+ }
 \item{y}{
 The response variable which can be binary or continuous. If it's binary, it should be  enter as 1 or  0.
 }
@@ -57,6 +60,8 @@ Matrix of the number of FPCA (functional PCA) components used for each feature t
 }
  \item{BetaMedian}{ This is the median of the effect of each basis function (pair of eigunfucntions) obtained from FPCA}
 \item{BetaFunc}{ Estimated functional effects using median estimaes of the effect of each base vector}
+\item{Beta2.5}{ This is the 2.5\% quantile  of the effect of each basis function (pair of eigunfucntions) obtained from FPCA}
+\item{Beta97.5}{ This is the 97.5\% quantile  of the effect of each basis function (pair of eigunfucntions) obtained from FPCA} 
 \item{XsiMean}{ Posterior mean estimmates of \eqn{\xi^{(r)}_{ikl}}'s,  principal component scores associed with pair of eigenfunctions \eqn{(\phi_k, \psi_l)}'s.
 }
 \item{GamMean}{ Estimated  marginal  posterior probabilities, \eqn{Prob(\gamma^{(r)}_{kl}=1)} of component selection.} 
@@ -117,7 +122,8 @@ X=array(0,dim=c(R,N,TT,TT))
 for (i in 1:N){
 X[,i,,]=glcm$GLCM[[i]];
 }
-Res<-BayesF2DMCMC(covbCov=(meth1=="CorBeta"),y=y,typeoutcome="binary",TwoDX=X,nbriter=5000,nbrburnin=1000,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1)
+Res<-BayesF2DMCMC(covbCov=(meth1=="CorBeta"),y=y,typeoutcome="binary",TwoDX=X,
+                  nbriter=5000,nbrburnin=1000,chainNber=1,hypsigm_rr=c(0.5,0.5),h=1)
 }
 % add one or more standard keywords, see file 'keywords' in the
 % r documentation directory.
