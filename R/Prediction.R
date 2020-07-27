@@ -1,4 +1,4 @@
-Prediction<-function(Bayes2DObject,prediction="CV",K=NULL,TwoDXtest=NULL, Xcovtest=NULL){
+Prediction<-function(Bayes2DObject,prediction="CV",K=NULL,TestList=NULL,TwoDXtest=NULL, Xcovtest=NULL){
 Bayes2DObject=Bayes2DObject$ForPredict;
 n=Bayes2DObject$n;
 r=Bayes2DObject$r;
@@ -10,7 +10,9 @@ r=Bayes2DObject$r;
           stop("You must specify K, the number of folds for cross validation")
       }
 ##library(caret);
-TestList <- createFolds(1:n, k = K, list = TRUE, returnTrain = FALSE);
+    if (is.null(TestList)) {
+    TestList <- createFolds(1:n, k = K, list = TRUE, returnTrain = FALSE);
+    }
 nbrset=unlist(lapply(TestList,length))
 ListTest=unlist(TestList);
 ListTraining=unlist(lapply(TestList,function(x) seq(1,n)[-x]))

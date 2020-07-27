@@ -8,7 +8,7 @@ Prediction performance
 This function evaluates the prediction performance using cross-validation techniques or by computing the prediction of new observations. 
 }
 \usage{
-Prediction(Bayes2DObject,prediction="CV",K=NULL,TwoDXtest=NULL, Xcovtest=NULL)
+Prediction(Bayes2DObject,prediction="CV",K=NULL,TestList=NULL,TwoDXtest=NULL, Xcovtest=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,6 +21,9 @@ It takes  two values:  "CV" for cross-valiadation technique  or "NoCV" if we pre
 }
   \item{K}{
 The number of folds if prediction="CV". 
+}
+  \item{TestList}{
+Sample partition as a list if prediction="CV". For instance, if n=5 and K=2, Teslist[[1]]=1,3,5 and Teslist[[1]]=2,4. However, when  TesList=NULL, the partition is done ramdomly.
 }
 \item{TwoDXtest}{
 %%     ~~Describe \code{sample} here~~
