@@ -120,7 +120,7 @@ Beta97.5=list()
 CovSample1=aperm(array(result$CovImageSample,dim=c(r,r,nbriter)))
 CovImageMean=apply(CovSample1,c(2,3),mean);
 CovImageMean1=as.vector(t(apply(CovSample1,c(2,3),mean)));
-  return (list(NbrComp=NbrComp,BetaMedian=BetaMedian,BetaFunc=BetaFunc,Beta2.5=Beta2.5,Beta97.5=Beta97.5,XsiSampleMean=XsiSampleMean,GamMean=GamMean,LambdaMean=LambdaMean,CovImageMean=CovImageMean,
+  return (list(NbrComp=NbrComp,BetaMedian=BetaMedian,BetaFunc=BetaFunc,Beta2.5=Beta2.5,Beta97.5=Beta97.5,XsiSampleMean=XsiSampleMean,GamMean=GamMean,LambdaMean=LambdaMean,CovImageMean=CovImageMean,CovSample=CovSample1,
  ForPredict=list(nsym=nsym,MeanCov=MeanCov,n=n,Mean=Mean,typeoutcome=typeoutcome,TT=TT,r=r,nbrcov=nbrcov,y=y,KK=KK,Base2D=Base2D,Xcov1=Xcov1,nbriter=nbriter,XsiMean1=result$XsiMean1,CovImageMean1=CovImageMean1,rhosample1=result$rhosample1,LambdaMean1=result$LambdaMean1,hypsigm_rr=hypsigm_rr,h=h,covboolean=covbCov*1,yMean=result$yMean,X=X,sigma2xMean=result$sigma2xMean,sigma2yMean1=result$sigma2yMean1)))
 }
 
